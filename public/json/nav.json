@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Palette",
+    "route": "home"
+  },
+  {
+    "name": "WCAG",
+    "route": "wcag"
+  },
+  {
+    "name": "Export",
+    "route": "export"
+  }
+]

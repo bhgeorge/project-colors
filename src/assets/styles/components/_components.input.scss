@@ -1,0 +1,16 @@
+.c-input {
+  border: none;
+  border-bottom: 1px solid color('gray', 'light');
+  font-size: inherit;
+  color: inherit;
+  font-weight: inherit;
+  width: 100%;
+
+  &:focus {
+    border-bottom-color: color('gray', 'dark');
+  }
+
+  &--inline {
+    display: inline-block;
+  }
+}

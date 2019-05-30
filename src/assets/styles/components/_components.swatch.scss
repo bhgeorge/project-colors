@@ -1,0 +1,37 @@
+.c-swatch {
+  box-shadow: 0 0 5px 0 rgba(#303030, 0.3);
+  width: 10rem;
+  height: 14rem;
+
+  &__color {
+    height: 0px;
+    width: 100%;
+    padding-bottom: 100%;
+    display: block;
+  }
+
+  &__info {
+    padding: 8px;
+    font-size: $font-s;
+  }
+
+  &__add {
+    height: 100%;
+    width: 100%;
+    padding: $space-l;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &--no-shadow {
+    box-shadow: none;
+    border: 2px dashed color('gray', 'light');
+    vertical-align: top;
+  }
+}
+.c-swatch-tiny {
+  height: 1rem;
+  width: 1rem;
+  display: inline-block;
+}

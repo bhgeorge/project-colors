@@ -1,0 +1,14 @@
+$navColor: color('gray', 'black');
+
+.c-site-header {
+  background: $navColor;
+}
+
+.c-site-nav {
+
+  &__header,
+  &__item:after,
+  &__copyright {
+    background: $navColor;
+  }
+}
