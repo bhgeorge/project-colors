@@ -9,7 +9,9 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "ally.js": "^1.4.1",
     "core-js": "^2.6.5",
+    "portal-vue": "^2.1.4",
     "register-service-worker": "^1.6.2",
     "tinycolor2": "^1.4.1",
     "underscore": "^1.9.1",

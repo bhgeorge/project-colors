@@ -22,24 +22,48 @@
           </p>
         </div>
         <ul class="o-list-bare">
-          <li v-for="link in nav" :key="link.route" :class="{'o-list-bare__item': true, 'c-site-nav__item': true, 'active': activeSubdir === link.route }">
-            <router-link :to="{ name: link.route }" class="c-site-nav__link u-p-vert-xs u-p-horiz-s">
+          <li
+            v-for="link in nav"
+            :key="link.route"
+            :class="{ 'o-list-bare__item': true,
+                'c-site-nav__item': true,
+                'active': activeSubdir === link.route }"
+          >
+            <router-link
+              :to="{ name: link.route }"
+              class="c-site-nav__link u-p-vert-xs u-p-horiz-s"
+            >
               {{ link.name }}
             </router-link>
           </li>
         </ul>
         <div class="c-site-nav__copyright">
-          <p class="u-font-xs u-c-purple-light">&copy; Brian George 2019</p>
+          <p class="u-font-xs u-c-gray-light">v{{ versionNumber }}</p>
         </div>
       </nav>
     </header>
     <main id="site-main" class="c-site-main">
       <router-view/>
     </main>
+    <portal-target name="modal" slim />
     <div aria-live="polite">
-      <transition-group name="c-alert-trans" tag="div" mode="out-in" class="c-alert__global-container">
-        <div v-for="(alert, index) in alerts" :key="alert.id" :class="alert.classes">
-          <button class="c-alert__close" type="button" name="closeGlobalAlert" @click="closeAlert(index)">
+      <transition-group
+        name="c-alert-trans"
+        tag="div"
+        mode="out-in"
+        class="c-alert__global-container"
+      >
+        <div
+          v-for="(alert, index) in alerts"
+          :key="alert.id"
+          :class="alert.classes"
+        >
+          <button
+            class="c-alert__close"
+            type="button"
+            name="closeGlobalAlert"
+            @click="closeAlert(index)"
+          >
             <Icon type="close" />
             <span class="u-visually-hidden">Close alert</span>
           </button>
@@ -66,6 +90,10 @@ export default {
       lastAlertSize: 0,
       navActive: false,
       nav,
+      showExport: false,
+      showImport: false,
+      // TODO: pull this from somewhere
+      versionNumber: '0.0.1',
     };
   },
   metaInfo: {

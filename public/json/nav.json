@@ -4,8 +4,8 @@
     "route": "home"
   },
   {
-    "name": "WCAG",
-    "route": "wcag"
+    "name": "Import",
+    "route": "import"
   },
   {
     "name": "Export",
