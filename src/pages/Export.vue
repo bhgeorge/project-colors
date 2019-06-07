@@ -4,10 +4,20 @@
       <h1 class="h2 u-font-bold u-m-bot">Export</h1>
       <ul class="o-list-inline">
         <li class="o-list-inline__item">
-          <button class="c-btn c-btn--primary" @click="exportAsJson"><span class="u-visually-hidden">Download as</span>JSON</button>
+          <button
+            class="c-btn c-btn--primary"
+            @click="exportAsJson"
+          >
+            <span class="u-visually-hidden">Download as</span>JSON
+          </button>
         </li>
         <li class="o-list-inline__item">
-          <button class="c-btn c-btn--primary" @click="exportAsScss"><span class="u-visually-hidden">Download as</span>SCSS</button>
+          <button
+            class="c-btn c-btn--primary"
+            @click="exportAsScss"
+          >
+            <span class="u-visually-hidden">Download as</span>SCSS
+          </button>
         </li>
       </ul>
     </div>
@@ -26,7 +36,7 @@ export default {
       const el = document.createElement('a');
       el.setAttribute('href', `data:${textType};charset=utf-8,${encodeURIComponent(file)}`);
       // TODO: Swap this for palette name
-      el.setAttribute('download', `testPalette.${fileExtension}`);
+      el.setAttribute('download', `${this.$store.state.colors.fileName}.${fileExtension}`);
       el.style.display = 'none';
       document.body.appendChild(el);
       el.click();
@@ -34,17 +44,23 @@ export default {
     },
     exportAsJson() {
       // TODO: Implement version control
+      const hues = [];
+      for (let i = 0; i < this.$store.state.colors.order.length; i += 1) {
+        const hueId = this.$store.state.colors.order[i];
+        const hue = this.$store.state.colors.hues[hueId];
+        const arr = [];
+        for (let j = 0; j < hue.shades.length; j += 1) {
+          const shadeId = hue.shades[j];
+          arr.push(this.$store.state.colors.shades[shadeId]);
+        }
+        hues.push({ ...hue, shades: arr });
+      }
       const obj = {
         projectColors: true,
         // TODO: Pull this value from somewhere
         version: '0.0.1',
-        hues: this.$store.state.colors.hues.map((h) => {
-          const hue = {
-            name: h.name,
-            shades: h.shades,
-          };
-          return hue;
-        }),
+        name: this.$store.state.colors.name,
+        hues,
       };
       this.createFileForDownload('text/json', 'json', JSON.stringify(obj));
     },

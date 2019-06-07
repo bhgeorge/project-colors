@@ -9,8 +9,7 @@
         :id="`${shade.id}`"
         class="u-visually-hidden"
         type="color"
-        v-model="localHex"
-        @change="updateSwatch"
+        v-model="shadeHex"
       />
       <div class="u-flex u-flex--align-baseline u-p-bot u-color-gray-dark u-font-bold">
         <p class="u-font-bold u-m-right-s">{{ hue.name }}</p>
@@ -20,20 +19,17 @@
           :id="`${shade.id}__hex`"
           class="c-input c-input--inline"
           type="text"
-          v-model="localShade"
-          @keyup="updateSwatch"
-          @change="updateSwatch"
+          v-model="shadeName"
         />
       </div>
       <label for=""></label>
       <input
         class="c-input"
         type="text"
-        v-model="localHex"
-        @keyup="updateSwatch"
-        @change="updateSwatch"
+        v-model="shadeHex"
       />
-      <a href="#" @click="openDetail">Detail</a>
+      <a href="#" class="u-font-xs u-m-right" @click.prevent="openDetail" role="button">Detail</a>
+      <a href="#" class="u-font-xs" @click.prevent="removeShade">Remove</a>
     </div>
     <Modal v-if="showDetail" @emitClose="showDetail = false">
       <h4 class="h4 u-font-serif u-font-bold u-m-bot">WCAG Accesible Matches</h4>
@@ -74,20 +70,12 @@ import colorContrast from '@/mixins/colorContrast';
 
 export default {
   props: {
-    hue: {
-      type: Object,
+    parent: {
+      type: String,
       required: true,
     },
-    shade: {
-      type: Object,
-      required: true,
-    },
-    hueIndex: {
-      type: Number,
-      required: true,
-    },
-    shadeIndex: {
-      type: Number,
+    reference: {
+      type: String,
       required: true,
     },
   },
@@ -111,23 +99,56 @@ export default {
     };
   },
   computed: {
+    hue() {
+      return this.$store.state.colors.hues[this.parent];
+    },
+    shade() {
+      return this.$store.state.colors.shades[this.reference];
+    },
+    shadeHex: {
+      get() {
+        return this.shade.hex;
+      },
+      set(value) {
+        this.$store.dispatch('colors/updateShade', {
+          id: this.reference,
+          hex: value,
+          name: this.shade.name,
+        });
+      },
+    },
+    shadeName: {
+      get() {
+        return this.shade.name;
+      },
+      set(value) {
+        this.$store.dispatch('colors/updateShade', {
+          id: this.shade.id,
+          hex: this.shade.hex,
+          name: value,
+        });
+      },
+    },
     styleObj() {
       return {
-        backgroundColor: this.localHex,
+        backgroundColor: this.shadeHex,
       };
-    },
-    hues() {
-      return this.$store.state.colors.hues;
     },
   },
   methods: {
     computeWcag() {
       this.wcag = { ui: [], aa: [], aaa: [] }; // eslint-disable-line
-      for (let i = 0; i < this.hues.length; i += 1) {
-        const hue = this.hues[i];
+      const hues = { ...this.$store.state.colors.hues };
+      const shades = { ...this.$store.state.colors.shades };
+      console.log(hues);
+      const hueKeys = Object.keys(hues);
+      for (let i = 0; i < hueKeys.length; i += 1) {
+        const hue = hues[hueKeys[i]];
+        console.log(hue);
         for (let j = 0; j < hue.shades.length; j += 1) {
-          const shade = hue.shades[j];
-          const contrast = this.testContrast(this.localHex, shade.hex);
+          const shade = shades[hue.shades[j]];
+          console.log(shade);
+          const contrast = this.testContrast(this.shadeHex, shade.hex);
           if (contrast >= 7) {
             this.wcag.aaa.push({ hex: shade.hex, name: `${hue.name} ${shade.name}`, id: shade.id });
           } else if (contrast >= 4.5) {
@@ -142,22 +163,12 @@ export default {
       this.computeWcag();
       this.showDetail = true;
     },
-    updateSwatch() {
-      const obj = {
-        hueIndex: this.hueIndex,
-        shadeIndex: this.shadeIndex,
-        shade: {
-          name: this.localName,
-          hex: this.localHex,
-          id: this.shade.id,
-        },
-      };
-      this.$store.dispatch('colors/updateSwatch', obj);
+    removeShade() {
+      this.$store.dispatch('colors/removeShade', {
+        shadeId: this.reference,
+        hueId: this.parent,
+      });
     },
-  },
-  created() {
-    this.localName = this.shade.name;
-    this.localHex = this.shade.hex;
   },
 };
 </script>

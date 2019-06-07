@@ -1,0 +1,85 @@
+<template lang="html">
+  <div>
+    <input class="c-input" type="text" v-model="hueName">
+    <ul class="o-list-inline u-m-top-l u-m-bot-xxl">
+      <Draggable v-model="hue.shades" :options="{draggable: '.draggable'}">
+        <li
+          v-for="shade in hue.shades"
+          :key="shade"
+          class="draggable o-list-inline__item"
+        >
+          <Swatch
+            :parent="reference"
+            :reference="shade"
+          />
+        </li>
+        <li class="o-list-inline__item c-swatch c-swatch--no-shadow" slot="footer">
+          <a class="u-clickarea" role="button" @click="addShade">
+            <div class="c-swatch__add u-font-xs u-color-gray">
+              Add {{ hue.name }} Shade
+            </div>
+          </a>
+        </li>
+      </Draggable>
+    </ul>
+  </div>
+</template>
+
+<script>
+import Draggable from 'vuedraggable';
+import Swatch from '@/components/Swatch';
+import randomId from '@/mixins/randomId';
+
+export default {
+  props: {
+    reference: {
+      type: String,
+      required: true,
+    },
+  },
+  components: {
+    Draggable,
+    Swatch,
+  },
+  mixins: [
+    randomId,
+  ],
+  computed: {
+    hue() {
+      return this.$store.state.colors.hues[this.reference];
+    },
+    hueName: {
+      get() {
+        return this.hue.name;
+      },
+      set(value) {
+        this.$store.dispatch('colors/updateHue', {
+          id: this.reference,
+          name: value,
+          shades: this.hue.shades,
+        });
+      },
+    },
+  },
+  methods: {
+    addShade() {
+      // TODO: Update this to be a shade of w/e color
+      const obj = {
+        id: this.reference,
+        shade: {
+          name: 'Dark',
+          hex: '#303030',
+          id: this.generateRandomId(),
+        },
+      };
+      this.$store.dispatch('colors/addShade', obj);
+    },
+    updateHue() {
+      this.$store.dispatch('colors/updateHue', { ...this.hue, name: this.localName });
+    },
+  },
+  created() {
+    this.localName = this.hue.name;
+  },
+};
+</script>

@@ -19,15 +19,14 @@ export default {
     importFile() {
       const file = this.$refs.importFile.files[0];
       if (file) {
-        console.log('I was triggered');
         const reader = new FileReader();
         reader.readAsText(file, 'UTF-8');
         reader.onload = (e) => {
           const obj = JSON.parse(e.target.result);
           // TODO: Implement alerts for incorrect file uploads
-          if (obj.projectColors && obj.version <= 1) {
+          if (obj.projectColors) {
             // TODO: Implement version control
-            this.$store.dispatch('colors/setBulk', obj.hues);
+            this.$store.dispatch('colors/importColors', obj);
           }
         };
         reader.onerror = (e) => {
