@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import Modal from '@/components/Modal';
+import Modal from 'vue-base/components/Modal';
 import SwatchReference from '@/components/SwatchReference';
 import colorContrast from '@/mixins/colorContrast';
 
@@ -140,14 +140,11 @@ export default {
       this.wcag = { ui: [], aa: [], aaa: [] }; // eslint-disable-line
       const hues = { ...this.$store.state.colors.hues };
       const shades = { ...this.$store.state.colors.shades };
-      console.log(hues);
       const hueKeys = Object.keys(hues);
       for (let i = 0; i < hueKeys.length; i += 1) {
         const hue = hues[hueKeys[i]];
-        console.log(hue);
         for (let j = 0; j < hue.shades.length; j += 1) {
           const shade = shades[hue.shades[j]];
-          console.log(shade);
           const contrast = this.testContrast(this.shadeHex, shade.hex);
           if (contrast >= 7) {
             this.wcag.aaa.push({ hex: shade.hex, name: `${hue.name} ${shade.name}`, id: shade.id });

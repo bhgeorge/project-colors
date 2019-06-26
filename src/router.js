@@ -12,6 +12,11 @@ export default new Router({
       component: Home,
     },
     {
+      path: '/theme',
+      name: 'theme',
+      component: () => import('@/pages/Themes'),
+    },
+    {
       path: '/import',
       name: 'import',
       component: () => import('@/pages/Import'),

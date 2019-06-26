@@ -1,11 +1,4 @@
-/* ============
- * Vuex Store
- * ============
- *
- * The store of the application.
- *
- * http://vuex.vuejs.org/en/index.html
- */
+/* eslint import/no-cycle: [2, { maxDepth: 1 }] */
 
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -14,6 +7,7 @@ import createLogger from 'vuex/dist/logger';
 // Modules
 import core from './modules/core';
 import colors from './modules/colors';
+import themes from './modules/themes';
 
 Vue.use(Vuex);
 
@@ -26,6 +20,7 @@ export default new Vuex.Store({
   modules: {
     core,
     colors,
+    themes,
   },
 
   /**

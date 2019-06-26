@@ -4,6 +4,4 @@ export default {
   order: [],
   name: 'Project Colors',
   fileName: 'project-colors',
-  themeVars: [],
-  themes: [],
 };

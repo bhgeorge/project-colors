@@ -12,7 +12,6 @@
         <Icon :type="type" />
         <span class="u-visually-hidden">Toggle navigation</span>
       </button>
-      <div class="c-pattern c-pattern--dimaa"></div>
       <nav class="c-site-nav">
         <div class="o-cover-link u-p-s c-site-nav__header">
           <p>

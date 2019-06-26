@@ -8,7 +8,9 @@
             <Hue :reference="hue" />
           </li>
           <li class="o-list-bar__item">
-            <a role="button" @click="addHue">Add Hue</a>
+            <a role="button" @click="addHue">
+              <Icon type="add" :modifiers="['u-font-vert-mid']" /> Add Hue
+            </a>
           </li>
         </ul>
       </div>
@@ -19,6 +21,7 @@
 <script>
 import Layout from '@/layouts/Default';
 import Hue from '@/components/Hue';
+import Icon from 'vue-base/components/Icon';
 import randomId from '@/mixins/randomId';
 
 export default {
@@ -26,6 +29,7 @@ export default {
   components: {
     Layout,
     Hue,
+    Icon,
   },
   mixins: [
     randomId,

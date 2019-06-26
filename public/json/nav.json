@@ -4,6 +4,10 @@
     "route": "home"
   },
   {
+    "name": "Themes",
+    "route": "theme"
+  },
+  {
     "name": "Import",
     "route": "import"
   },

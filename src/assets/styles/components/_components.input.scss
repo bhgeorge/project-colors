@@ -14,3 +14,17 @@
     display: inline-block;
   }
 }
+
+.c-input--radio-color {
+
+  label {
+    display: block;
+  }
+
+  input[type="radio"]:checked {
+    + label {
+      background: color('theme-base', 'dark');
+      color: color('white');
+    }
+  }
+}

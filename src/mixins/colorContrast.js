@@ -1,4 +1,13 @@
 export default {
+  data() {
+    return {
+      contrastThresholds: {
+        ui: 3,
+        aa: 4.5,
+        aaa: 7,
+      },
+    };
+  },
   methods: {
     hexToRgb(hex) {
       const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -27,6 +36,10 @@ export default {
       const ratio = (light + 0.05) / (dark + 0.05);
 
       return Math.round(ratio * 100) / 100;
+    },
+    isHigherThanThreshold(color1, color2, threshold) {
+      console.log(this.testContrast(color1, color2) >= this.contrastThresholds[threshold]);
+      return this.testContrast(color1, color2) >= this.contrastThresholds[threshold];
     },
   },
 };

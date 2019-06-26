@@ -1,7 +1,7 @@
 <template lang="html">
   <portal :to="portal">
     <transition name="u-trans-pop-in" @after-enter="handleEnter">
-      <div class="o-modal" @click.self="closeModal" tabindex="-1" role="dialog">
+      <div class="o-modal" @click.self="closeModal" tabindex="-1" role="dialog" ref="modal">
         <div :class="classNames" role="document">
           <div class="o-modal__container">
             <button v-if="hasClose" class="o-modal__close" @click="closeModal" tabindex="0">
@@ -42,10 +42,8 @@ export default {
   },
   data() {
     return {
-      focus: {
-        first: null,
-        last: null,
-      },
+      initialEl: null,
+      handle: null,
     };
   },
   computed: {
@@ -69,40 +67,18 @@ export default {
           this.closeModal();
         }
       }
-      // Keep tabbing trapped in the modal
-      if (event.key === 'Tab' || event.keyCode === 9) {
-        if (event.shiftKey) {
-          if (document.activeElement.hasAttribute('data-focus-first')) {
-            // We are attempting to tab out the top
-            event.preventDefault();
-            this.focus.last.focus();
-          }
-        } else if (document.activeElement.hasAttribute('data-focus-last')) {
-          event.preventDefault();
-          this.focus.first.focus();
-        }
-      }
     },
     handleEnter() {
-      // Set the focus trap
-      const focusable = ally.query.focusable({
-        context: '.o-modal__container',
-        includeContext: true,
-        strategy: 'quick',
+      this.handle = ally.maintain.tabFocus({
+        context: this.$refs.modal,
       });
-
-      this.focus.first = focusable[0];
-      this.focus.first.setAttribute('data-focus-first', 1);
-      this.focus.last = focusable[focusable.length - 1];
-      this.focus.last.setAttribute('data-focus-last', 1);
-
-      this.focus.first.focus();
-
       window.addEventListener('keydown', this.handleKeyboard);
+      this.$refs.modal.focus();
     },
   },
   created() {
     // Remove non-modal content from readability
+    this.initialEl = document.activeElement;
     const globalContainer = document.getElementById('site-main');
     document.body.classList.add('no-scroll');
     globalContainer.setAttribute('tabindex', -1);
@@ -114,7 +90,9 @@ export default {
     document.body.classList.remove('no-scroll');
     globalContainer.removeAttribute('tabindex');
     globalContainer.removeAttribute('aria-hidden');
+    this.handle.disengage();
     window.removeEventListener('keydown', this.handleKeyboard);
+    this.initialEl.focus();
   },
 };
 </script>

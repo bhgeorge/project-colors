@@ -1,0 +1,11 @@
+export const ADD_THEME_VAR = 'ADD_THEME_VAR';
+export const UPDATE_THEME_VAR = 'UPDATE_THEME_VAR';
+export const ADD_MAPPING = 'ADD_MAPPING';
+export const UPDATE_MAPPING = 'UPDATE_MAPPING';
+
+export default {
+  ADD_THEME_VAR,
+  UPDATE_THEME_VAR,
+  ADD_MAPPING,
+  UPDATE_MAPPING,
+};
