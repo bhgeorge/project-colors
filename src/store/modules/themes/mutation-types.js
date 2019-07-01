@@ -2,10 +2,16 @@ export const ADD_THEME_VAR = 'ADD_THEME_VAR';
 export const UPDATE_THEME_VAR = 'UPDATE_THEME_VAR';
 export const ADD_MAPPING = 'ADD_MAPPING';
 export const UPDATE_MAPPING = 'UPDATE_MAPPING';
+export const ADD_THEME = 'ADD_THEME';
+export const SET_THEME_NAME = 'SET_THEME_NAME';
+export const SET_THEME_VAL = 'SET_THEME_VAL';
 
 export default {
   ADD_THEME_VAR,
   UPDATE_THEME_VAR,
   ADD_MAPPING,
   UPDATE_MAPPING,
+  ADD_THEME,
+  SET_THEME_NAME,
+  SET_THEME_VAL,
 };

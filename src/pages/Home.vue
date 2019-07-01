@@ -8,7 +8,7 @@
             <Hue :reference="hue" />
           </li>
           <li class="o-list-bar__item">
-            <a role="button" @click="addHue">
+            <a class="u-m-top u-d-block" role="button" @click="addHue">
               <Icon type="add" :modifiers="['u-font-vert-mid']" /> Add Hue
             </a>
           </li>

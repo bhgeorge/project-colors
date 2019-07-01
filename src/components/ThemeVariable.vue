@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="c-theme-variable">
-    <div class="u-m-b">
+    <div class="u-m-bot u-p u-b u-b-theme-base">
       <!-- Variable Name -->
-      <div class="c-input">
+      <div class="u-m-bot-s">
         <label :for="`${reference}_name`">Variable Name</label>
         <input
           :id="`${reference}_name`"
@@ -12,42 +12,43 @@
           v-model="variableName"
         />
       </div>
-      <div class="c-input">
+      <!-- Variable Value -->
+      <div>
         <label :for="`${reference}_val`">Color</label>
         <input :id="`${reference}_val`" type="hidden" name="variable_val" v-model="variableVal">
-        <div class="c-card o-cover-link u-d-flex">
+        <div class="c-card o-cover-link u-d-flex u-p-xs">
           <SwatchReference
             v-if="shadeReference"
             :hex="shadeReference.hex"
             :name="shadeReference.name"
           />
-          <a href="#" class="o-cover-link__item" role="button" @click="showShadeSelect">
+          <a href="#" class="o-cover-link__item" role="button" @click.prevent="showShadeSelect">
             <Icon type="edit" :modifiers="['u-m-left-s']" />
             <span class="u-visually-hidden">Change Color</span>
           </a>
         </div>
       </div>
-    </div>
-    <!-- Theme Mapping -->
-    <div class="u-b-top">
-      <details>
-        <summary>Accessiblity Mapping</summary>
-        <ul class="o-list-bare">
-          <li
-            v-for="item in mappings"
-            :key="item"
-            class="o-list-bare__item"
-          >
-            <ThemeAccessibilityMapItem
-              :reference="item"
-              :base="reference"
-            />
-          </li>
-        </ul>
-        <a href="#" role="button" @click="addMapping">
-          <Icon type="add" :modifiers="['u-font-align-center']" /> Add Mapping
-        </a>
-      </details>
+      <!-- Theme Mapping -->
+      <div class="u-b-top u-b-theme-base u-m-top-xs u-p-top-s">
+        <details>
+          <summary>Accessiblity Mapping</summary>
+          <ul class="o-list-bare">
+            <li
+              v-for="item in themeMappings"
+              :key="item"
+              class="o-list-bare__item"
+            >
+              <ThemeAccessibilityMapItem
+                :reference="item"
+                :base="reference"
+              />
+            </li>
+          </ul>
+          <a href="#" role="button" @click.prevent="addMapping">
+            <Icon type="add" :modifiers="['u-font-align-center']" /> Add Mapping
+          </a>
+        </details>
+      </div>
     </div>
     <!-- Value Select Modal -->
     <Modal
@@ -56,24 +57,26 @@
     >
       <form @submit.prevent="setVal">
         <!-- Hue Select -->
-        <label :for="`${reference}_val_hue`">Hue</label>
-        <select
-          :id="`${reference}_val_hue`"
-          class="c-input__input--select"
-          name="variable_hue"
-          v-model="selectedHue"
-          required
-        >
-          <option
-            v-for="hue in hues"
-            :key="hue.id"
-            :value="hue.id"
+        <div class="u-m-bot">
+          <label :for="`${reference}_val_hue`">Hue</label>
+          <select
+            :id="`${reference}_val_hue`"
+            class="c-input__input c-input__input--select u-d-block"
+            name="variable_hue"
+            v-model="selectedHue"
+            required
           >
-            {{ hue.name }}
-          </option>
-        </select>
+            <option
+              v-for="hue in hues"
+              :key="hue.id"
+              :value="hue.id"
+            >
+              {{ hue.name }}
+            </option>
+          </select>
+        </div>
         <!-- Shade Select -->
-        <div role="radiogroup" :aria-labelledby="`${reference}_val_shade_label`">
+        <div v-show="shades" role="radiogroup" :aria-labelledby="`${reference}_val_shade_label`">
           <p :id="`${reference}_val_shade_label`">Shade</p>
           <div
             v-for="shade in shades"
@@ -110,6 +113,7 @@ import ThemeAccessibilityMapItem from '@/components/ThemeAccessibilityMapItem';
 import Modal from 'vue-base/components/Modal';
 import Icon from 'vue-base/components/Icon';
 import randomId from '@/mixins/randomId';
+import themeMappings from '@/mixins/themeMappings';
 
 export default {
   props: {
@@ -126,6 +130,7 @@ export default {
   },
   mixins: [
     randomId,
+    themeMappings,
   ],
   data() {
     return {
@@ -184,23 +189,6 @@ export default {
           name: shade.name,
           hex: shade.hex,
         });
-      }
-      return arr;
-    },
-    /**
-     * Returns a filtered array of mapping IDs that use this variable
-     *
-     * @returns {Array} A list of mapping reference IDs
-     */
-    mappings() {
-      const map = this.$store.state.themes.map; // eslint-disable-line
-      const keys = Object.keys(map);
-      const arr = [];
-      for (let i = 0; i < keys.length; i += 1) {
-        const key = keys[i];
-        if (map[key].a === this.reference || map[key].b === this.reference) {
-          arr.push(key);
-        }
       }
       return arr;
     },

@@ -58,9 +58,10 @@ export default {
       const obj = {
         projectColors: true,
         // TODO: Pull this value from somewhere
-        version: '0.0.1',
+        version: '0.1.0',
         name: this.$store.state.colors.name,
         hues,
+        ...this.$store.state.themes,
       };
       this.createFileForDownload('text/json', 'json', JSON.stringify(obj));
     },

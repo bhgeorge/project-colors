@@ -27,6 +27,7 @@ export default {
           if (obj.projectColors) {
             // TODO: Implement version control
             this.$store.dispatch('colors/importColors', obj);
+            this.$store.dispatch('themes/importThemes', obj);
           }
         };
         reader.onerror = (e) => {

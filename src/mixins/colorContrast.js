@@ -38,7 +38,6 @@ export default {
       return Math.round(ratio * 100) / 100;
     },
     isHigherThanThreshold(color1, color2, threshold) {
-      console.log(this.testContrast(color1, color2) >= this.contrastThresholds[threshold]);
       return this.testContrast(color1, color2) >= this.contrastThresholds[threshold];
     },
   },
