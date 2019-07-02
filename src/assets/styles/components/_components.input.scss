@@ -1,17 +1,24 @@
 .c-input {
-  border: none;
-  border-bottom: 1px solid color('gray', 'light');
-  font-size: inherit;
-  color: inherit;
-  font-weight: inherit;
-  width: 100%;
 
-  &:focus {
-    border-bottom-color: color('gray', 'dark');
-  }
+  &__input {
 
-  &--inline {
-    display: inline-block;
+    &--inline {
+      display: inline-block;
+    }
+
+    &--subtle {
+      border: none;
+      border-bottom: 1px solid color('theme-base', 'dark');
+      color: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      padding: 0;
+      width: 100%;
+
+      &:focus {
+        border-bottom-color: color('theme-primary');
+      }
+    }
   }
 }
 

@@ -2,7 +2,16 @@
   <Layout>
     <section class="o-section">
       <div class="o-container">
-        <input class="c-input h1" type="text" name="name" v-model="paletteName" />
+        <div class="h2 u-m-bot-l">
+          <label class="u-visually-hidden" for="palette_name">Palette Name</label>
+          <input
+            id="palette_name"
+            class="c-input__input c-input__input--subtle u-font-bold"
+            type="text"
+            name="name"
+            v-model="paletteName"
+          />
+        </div>
         <ul class="o-list-bare">
           <li v-for="hue in order" :key="hue" class="o-list-bare__item">
             <Hue :reference="hue" />

@@ -1,7 +1,15 @@
 <template lang="html">
-  <div>
-    <input class="c-input" type="text" v-model="hueName">
-    <ul class="o-list-inline u-m-top-l u-m-bot-xxl">
+  <div class="u-p-bot-xl">
+    <div class="h3">
+      <label class="u-visually-hidden" :for="`${reference}_name`">Hue Name</label>
+      <input
+        :id="`${reference}_name`"
+        class="c-input__input c-input__input--subtle"
+        type="text"
+        v-model="hueName"
+      />
+    </div>
+    <ul class="o-list-inline u-m-top-l">
       <Draggable v-model="hue.shades" :options="{draggable: '.draggable'}">
         <li
           v-for="shade in hue.shades"

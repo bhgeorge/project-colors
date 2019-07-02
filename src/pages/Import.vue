@@ -1,10 +1,12 @@
 <template lang="html">
   <Layout>
-    <div class="o-container">
-      <h1 class="h2 u-font-bold">Import</h1>
-      <label for="importFile">Select a File to Upload</label>
-      <input id="importFile" type="file" name="importFile" @change="importFile" ref="importFile"/>
-    </div>
+    <section class="o-section">
+      <div class="o-container">
+        <h1 class="h2 u-font-bold">Import</h1>
+        <label for="importFile">Select a File to Upload</label>
+        <input id="importFile" type="file" name="importFile" @change="importFile" ref="importFile"/>
+      </div>
+    </section>
   </Layout>
 </template>
 

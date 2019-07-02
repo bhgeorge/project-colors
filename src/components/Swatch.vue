@@ -17,14 +17,14 @@
         <label class="u-visually-hidden" :for="`${shade.id}__hex`">Hex</label>
         <input
           :id="`${shade.id}__hex`"
-          class="c-input c-input--inline"
+          class="c-input__input c-input__input--inline c-input__input--subtle"
           type="text"
           v-model="shadeName"
         />
       </div>
       <label for=""></label>
       <input
-        class="c-input"
+        class="c-input__input c-input__input--subtle"
         type="text"
         v-model="shadeHex"
       />

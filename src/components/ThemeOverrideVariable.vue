@@ -50,6 +50,7 @@ import Modal from 'vue-base/components/Modal';
 import Icon from 'vue-base/components/Icon';
 import colorContrast from '@/mixins/colorContrast';
 import themeMappings from '@/mixins/themeMappings';
+import themeVarOverrideHex from '@/mixins/themeVarOverrideHex';
 
 export default {
   props: {
@@ -71,6 +72,7 @@ export default {
   mixins: [
     colorContrast,
     themeMappings,
+    themeVarOverrideHex,
   ],
   data() {
     return {
@@ -86,14 +88,10 @@ export default {
       return this.$store.state.themes.themeVars[this.baseVarId];
     },
     hex() {
-      const themeOverride = this.theme.vals[this.baseVarId];
-      if (themeOverride) {
-        if (themeOverride.hex) {
-          return themeOverride.hex;
-        }
-        return this.$store.state.colors.shades[themeOverride.shade].hex;
-      }
-      return this.$store.state.colors.shades[this.baseVar.val].hex;
+      return this.getThemeVarOverrideHex(
+        this.baseVarId,
+        this.theme.vals[this.baseVarId],
+      );
     },
     /**
      * Computes any accessibility errors for this variable using it's map in the current theme
@@ -150,19 +148,15 @@ export default {
     /**
      * Finds the hex value of the variable reference in this theme.
      *
-     * @param {String} ref The variable reference ID.
+     * @param {String} ref The themeVariable reference ID.
      *
      * @returns {String} The variables associated hex code in this theme.
      */
     getOppositeHex(ref) {
-      const themeRef = this.$store.state.themes.themes[this.themeId].vals[ref];
-      if (themeRef) {
-        if (themeRef.hex) {
-          return themeRef.hex;
-        }
-        return this.$store.state.colors.shades[themeRef.shade].hex;
-      }
-      return this.$store.state.colors.shades[this.$store.state.themes.themeVars[ref].val].hex;
+      return this.getThemeVarOverrideHex(
+        ref,
+        this.$store.state.themes.themes[this.themeId].vals[ref],
+      );
     },
   },
 };
