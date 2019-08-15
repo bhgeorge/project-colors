@@ -2,13 +2,15 @@
   <div class="">
     <div class="u-m-bot">
       <label :for="`${reference}_name`">Theme Name</label>
-      <input
-        :id="`${reference}_name`"
-        class="c-input__input c-input__input--subtle"
-        type="text"
-        name="theme_name"
-        v-model="themeName"
-      >
+      <div class="h3">
+        <input
+          :id="`${reference}_name`"
+          class="c-input__input c-input__input--subtle"
+          type="text"
+          name="theme_name"
+          v-model="themeName"
+        >
+      </div>
     </div>
     <ul class="o-list-bare">
       <li v-for="(item, key) in themeVars" :key="key" class="o-list-bare__item">

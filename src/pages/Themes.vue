@@ -1,16 +1,36 @@
 <template lang="html">
   <Layout>
-    <section class="o-section">
+    <section class="o-section" v-if="hasNoColors">
+      <div class="o-container">
+        <p class="u-font-l u-font-center">
+          You need to <router-link :to="{ name: 'home' }">create a palette</router-link> before you can begin theming it.
+        </p>
+      </div>
+    </section>
+    <section class="o-section" v-else>
       <div class="o-container">
         <h1 class="h2 u-font-bold u-m-bot-xs">Themes</h1>
-        <ul class="o-list-inline u-w-100">
-          <li class="o-list-inline__item">
-            <a href="#" role="tab">
+        <ul class="c-tabs">
+          <li :class="{ 'o-cover-link': true, 'c-tabs__tab': true, 'active': activeTab === 0}">
+            <a
+              href="#"
+              class="o-cover-link__item"
+              role="tab"
+              @click.prevent="setActiveTab(0)">
               Base
             </a>
           </li>
-          <li v-for="(theme, key) in themes" :key="key" class="o-list-inline__item">
-            <a href="#" role="tab">
+          <li
+            v-for="(theme, key, index) in themes"
+            :key="key"
+            :class="{ 'o-cover-link': true, 'c-tabs__tab': true, 'active': index + 1 === activeTab}"
+          >
+            <a
+              href="#"
+              class="o-cover-link__item"
+              role="tab"
+              @click.prevent="setActiveTab(index + 1)"
+            >
               {{ theme.name }}
             </a>
           </li>
@@ -22,25 +42,35 @@
           </li>
         </ul>
         <!-- Theme Vars -->
-        <div class="">
+        <div
+          v-show="activeTab === 0"
+          class="c-tab"
+          :aria-hidden="activeTab !== 0"
+          role="tabpael"
+        >
           <ul class="o-list-bare">
             <li v-for="variable in themeVars" :key="variable.id" class="o-list-bare__item">
               <ThemeVariable :reference="variable.id" />
             </li>
           </ul>
           <div class="u-m-top">
-            <a
+            <button
               class="c-btn c-btn--primary u-d-inline-block"
-              href="#"
-              role="button"
-              @click.prevent="addVariable"
+              @click="addVariable"
             >
               Add Variable
-            </a>
+            </button>
           </div>
         </div>
         <!-- Theme Tabs -->
-        <div v-for="(theme, key) in themes" :key="key">
+        <div
+          v-for="(theme, key, index) in themes"
+          :key="key"
+          class="c-tab"
+          v-show="index + 1 === activeTab"
+          :aria-hidden="index + 1 !== activeTab"
+          role="tabpanel"
+        >
           <Theme :reference="key" />
         </div>
       </div>
@@ -65,12 +95,20 @@ export default {
   mixins: [
     randomId,
   ],
+  data() {
+    return {
+      activeTab: 0,
+    };
+  },
   computed: {
     themeVars() {
       return this.$store.state.themes.themeVars;
     },
     themes() {
       return this.$store.state.themes.themes;
+    },
+    hasNoColors() {
+      return this.$store.state.colors.order.length === 0;
     },
   },
   methods: {
@@ -87,6 +125,9 @@ export default {
         name: 'New Theme',
         vals: {},
       });
+    },
+    setActiveTab(index) {
+      this.activeTab = index;
     },
   },
 };

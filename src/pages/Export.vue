@@ -63,7 +63,7 @@ export default {
       }
       const obj = {
         projectColors: true,
-        // TODO: Pull this value from somewhere
+        // TODO: Pull this value from the package
         version: '0.1.0',
         name: this.$store.state.colors.name,
         hues,
