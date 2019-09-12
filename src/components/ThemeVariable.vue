@@ -1,6 +1,16 @@
 <template lang="html">
   <div class="c-theme-variable">
-    <div class="u-m-bot u-p u-b u-b-theme-base">
+    <div class="u-m-bot u-p u-b u-b-theme-base u-pos-relative">
+      <!-- Remove Variable -->
+      <button
+        class="c-btn--ui c-btn--close"
+        type="button"
+        name="removeVariable"
+        @click="removeVariable"
+      >
+        <Icon type="close" :modifiers="['o-icon--l']" />
+        <span class="u-visually-hidden">Remove theme variable</span>
+      </button>
       <!-- Variable Name -->
       <div class="u-m-bot-s">
         <label :for="`${reference}_name`">Variable Name</label>
@@ -212,6 +222,12 @@ export default {
         level: null,
         id: this.generateRandomId(),
       });
+    },
+    removeVariable() {
+      for (let i = 0; i < this.themeMappings.length; i += 1) {
+        this.$store.dispatch('themes/removeMapping', this.themeMappings[i]);
+      }
+      this.$store.dispatch('themes/removeThemeVar', this.reference);
     },
   },
 };

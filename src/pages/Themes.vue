@@ -33,6 +33,15 @@
             >
               {{ theme.name }}
             </a>
+            <button
+              class="c-tabs__close"
+              type="button"
+              name="removeTheme"
+              @click="removeTheme(key, index + 1)"
+            >
+              <Icon type="close" />
+              <span class="u-visually-hidden">Remove theme {{ theme.name }}</span>
+            </button>
           </li>
           <li class="o-list-inline__item">
             <button class="c-btn c-btn--secondary" type="button" name="addTheme" @click="addTheme">
@@ -126,6 +135,23 @@ export default {
         vals: {},
       });
     },
+    /**
+     * Removes a theme from the store.
+     *
+     * @param {String} id The id of the theme.
+     * @param {Number} index The index of the tab to remove.
+     */
+    removeTheme(id, index) {
+      if (this.activeTab === index) {
+        this.setActiveTab(index - 1);
+      }
+      this.$store.dispatch('themes/removeTheme', id);
+    },
+    /**
+     * Sets the activeTab variable.
+     *
+     * @param {Number} index The index of the tab to make active.
+     */
     setActiveTab(index) {
       this.activeTab = index;
     },

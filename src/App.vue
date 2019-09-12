@@ -91,8 +91,8 @@ export default {
       nav,
       showExport: false,
       showImport: false,
-      // TODO: pull this from somewhere
-      versionNumber: '0.0.1',
+      // TODO: pull this from package.json
+      versionNumber: '0.1.0',
     };
   },
   metaInfo: {

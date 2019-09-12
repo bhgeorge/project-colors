@@ -1,7 +1,7 @@
 <template lang="html">
-  <div class="u-d-flex">
+  <div class="c-theme-mapping">
     <!-- Variable -->
-    <div class="c-input">
+    <div class="c-input c-theme-mapping__item">
       <label
         :for="`${base}-${reference}_map`"
       >
@@ -23,27 +23,39 @@
       </select>
     </div>
     <!-- Level -->
-    <div class="c-input">
-      <label
-        :for="`${base}-${reference}_level`"
-      >
-        Minimum Contrast
-      </label>
-      <select
-        :id="`${base}-${reference}_level`"
-        class="c-input__input--select"
-        name="level"
-        v-model="selectedLevel"
-      >
-        <option value="ui">UI (3.0)</option>
-        <option value="aa">AA (4.5)</option>
-        <option value="aaa">AAA (7.0)</option>
-      </select>
+    <div class="c-theme-mapping__item">
+      <div class="c-input u-d-inline-block">
+        <label
+          :for="`${base}-${reference}_level`"
+        >
+          Minimum Contrast
+        </label>
+        <select
+          :id="`${base}-${reference}_level`"
+          class="c-input__input--select"
+          name="level"
+          v-model="selectedLevel"
+        >
+          <option value="ui">UI (3.0)</option>
+          <option value="aa">AA (4.5)</option>
+          <option value="aaa">AAA (7.0)</option>
+        </select>
+      </div>
+      <!-- Pass/Fail -->
+      <div v-if="contrastFail" class="u-d-inline-block u-m-left-xs">
+        <Icon type="warning" />
+      </div>
     </div>
-    <!-- Pass/Fail -->
-    <div v-show="contrastFail">
-      <Icon type="warning" />
-    </div>
+    <!-- Delete -->
+    <button
+      class="c-btn--ui c-theme-mapping__item"
+      type="button"
+      name="removeMapping"
+      @click="removeMapping"
+    >
+      <Icon type="close" :modifiers="['o-icon--l']" />
+      <span class="u-visually-hidden">Remove mapping</span>
+    </button>
   </div>
 </template>
 
@@ -115,6 +127,11 @@ export default {
         );
       }
       return false;
+    },
+  },
+  methods: {
+    removeMapping() {
+      this.$store.dispatch('themes/removeMapping', this.reference);
     },
   },
 };

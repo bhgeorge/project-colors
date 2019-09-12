@@ -105,6 +105,10 @@ export default {
           const key = this.themeMappings[i];
           const mapping = this.$store.state.themes.map[key];
           const oppRef = mapping.a === this.baseVarId ? mapping.b : mapping.a;
+          // If mapping is currently incomplete
+          if (!oppRef) {
+            return [];
+          }
           const oppHex = this.getOppositeHex(oppRef);
           if (!this.isHigherThanThreshold(this.hex, oppHex, mapping.level)) {
             arr.push({

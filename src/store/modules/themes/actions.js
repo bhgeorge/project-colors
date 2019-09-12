@@ -6,6 +6,10 @@ export const addThemeVar = ({ commit }, obj) => {
   commit(types.ADD_THEME_VAR, obj);
 };
 
+export const removeThemeVar = ({ commit }, str) => {
+  commit(types.REMOVE_THEME_VAR, str);
+};
+
 export const updateThemeVar = ({ commit }, obj) => {
   commit(types.UPDATE_THEME_VAR, obj);
 };
@@ -14,12 +18,20 @@ export const addMapping = ({ commit }, obj) => {
   commit(types.ADD_MAPPING, obj);
 };
 
+export const removeMapping = ({ commit }, str) => {
+  commit(types.REMOVE_MAPPING, str);
+};
+
 export const updateMapping = ({ commit }, obj) => {
   commit(types.UPDATE_MAPPING, obj);
 };
 
 export const addTheme = ({ commit }, obj) => {
   commit(types.ADD_THEME, obj);
+};
+
+export const removeTheme = ({ commit }, str) => {
+  commit(types.REMOVE_THEME, str);
 };
 
 export const setThemeName = ({ commit }, obj) => {
@@ -44,10 +56,13 @@ export const importThemes = ({ commit }, obj) => { // eslint-disable-line
 
 export default {
   addThemeVar,
+  removeThemeVar,
   updateThemeVar,
   addMapping,
+  removeMapping,
   updateMapping,
   addTheme,
+  removeTheme,
   setThemeName,
   setThemeVal,
   importThemes,
