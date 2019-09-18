@@ -17,14 +17,9 @@ export default new Router({
       component: () => import('@/pages/Themes'),
     },
     {
-      path: '/import',
-      name: 'import',
-      component: () => import('@/pages/Import'),
-    },
-    {
-      path: '/export',
-      name: 'export',
-      component: () => import('@/pages/Export'),
+      path: '/save-load',
+      name: 'saveLoad',
+      component: () => import('@/pages/SaveLoad'),
     },
   ],
 });

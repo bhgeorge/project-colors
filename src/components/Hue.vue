@@ -10,9 +10,9 @@
       />
     </div>
     <ul class="o-list-inline u-m-top-l">
-      <Draggable v-model="hue.shades" :options="{draggable: '.draggable'}">
+      <Draggable v-model="shades" draggable=".draggable">
         <li
-          v-for="shade in hue.shades"
+          v-for="shade in shades"
           :key="shade"
           class="draggable o-list-inline__item"
         >
@@ -55,6 +55,18 @@ export default {
   computed: {
     hue() {
       return this.$store.state.colors.hues[this.reference];
+    },
+    shades: {
+      get() {
+        return this.hue.shades;
+      },
+      set(value) {
+        this.$store.dispatch('colors/updateHue', {
+          id: this.reference,
+          name: this.hueName,
+          shades: value,
+        });
+      },
     },
     hueName: {
       get() {

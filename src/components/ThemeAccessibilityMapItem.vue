@@ -118,11 +118,14 @@ export default {
     },
     contrastFail() {
       if (this.selectedVar) {
-        const shadeA = this.$store.state.themes.themeVars[this.mapping.a].val;
-        const shadeB = this.$store.state.themes.themeVars[this.mapping.b].val;
+        const shadeA = this.$store.state.themes.themeVars[this.mapping.a];
+        const shadeB = this.$store.state.themes.themeVars[this.mapping.b];
+        if (!shadeA || !shadeB) {
+          return false;
+        }
         return !this.isHigherThanThreshold(
-          this.$store.state.colors.shades[shadeA].hex,
-          this.$store.state.colors.shades[shadeB].hex,
+          this.$store.state.colors.shades[shadeA.val].hex,
+          this.$store.state.colors.shades[shadeB.val].hex,
           this.selectedLevel,
         );
       }

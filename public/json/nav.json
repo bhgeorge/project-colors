@@ -8,11 +8,7 @@
     "route": "theme"
   },
   {
-    "name": "Import",
-    "route": "import"
-  },
-  {
-    "name": "Export",
-    "route": "export"
+    "name": "Save/Load",
+    "route": "saveLoad"
   }
 ]

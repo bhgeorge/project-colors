@@ -1,11 +1,12 @@
 .c-swatch {
   box-shadow: 0 0 5px 0 rgba(#303030, 0.3);
+  margin-bottom: $space-s;
   width: 10rem;
 
   &__color {
     height: 0px;
     width: 100%;
-    padding-bottom: 100%;
+    padding-bottom: 50%;
     display: block;
   }
 
