@@ -5,6 +5,7 @@ export const ADD_SHADE = 'ADD_SHADE';
 export const REMOVE_SHADE = 'REMOVE_SHADE';
 export const UPDATE_SHADE = 'UPDATE_SHADE';
 export const SET_KEY = 'SET_KEY';
+export const RESET_STATE = 'RESET_STATE';
 
 export default {
   ADD_HUE,
@@ -13,4 +14,5 @@ export default {
   REMOVE_SHADE,
   UPDATE_SHADE,
   SET_KEY,
+  RESET_STATE,
 };

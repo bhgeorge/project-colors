@@ -8,6 +8,7 @@ export const ADD_THEME = 'ADD_THEME';
 export const REMOVE_THEME = 'REMOVE_THEME';
 export const SET_THEME_NAME = 'SET_THEME_NAME';
 export const SET_THEME_VAL = 'SET_THEME_VAL';
+export const RESET_STATE = 'RESET_STATE';
 
 export default {
   ADD_THEME_VAR,
@@ -20,4 +21,5 @@ export default {
   REMOVE_THEME,
   SET_THEME_NAME,
   SET_THEME_VAL,
+  RESET_STATE,
 };

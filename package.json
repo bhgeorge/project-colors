@@ -1,6 +1,6 @@
 {
   "name": "project-colors",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve --open",
@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "date-fns": "^2.2.1",
+    "idb": "^4.0.4",
     "portal-vue": "^2.1.5",
     "register-service-worker": "^1.6.2",
     "tinycolor2": "^1.4.1",

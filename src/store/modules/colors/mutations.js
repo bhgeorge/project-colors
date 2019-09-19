@@ -7,6 +7,7 @@ import {
   REMOVE_SHADE,
   UPDATE_SHADE,
   SET_KEY,
+  RESET_STATE,
 } from './mutation-types';
 
 export default {
@@ -39,6 +40,12 @@ export default {
 
   [SET_KEY](state, obj) {
     state[obj.key] = obj.val;
+  },
+
+  [RESET_STATE](state) {
+    state.hues = {};
+    state.shades = {};
+    state.order = [];
   },
 };
 /* eslint-enable no-param-reassign */

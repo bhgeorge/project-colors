@@ -11,6 +11,7 @@ import {
   REMOVE_THEME,
   SET_THEME_NAME,
   SET_THEME_VAL,
+  RESET_STATE,
 } from './mutation-types';
 
 export default {
@@ -57,6 +58,12 @@ export default {
     } else {
       Vue.set(state.themes[obj.themeId].vals, obj.varId, data);
     }
+  },
+
+  [RESET_STATE](state) {
+    state.themes = {};
+    state.themeVars = {};
+    state.map = {};
   },
 };
 /* eslint-enable no-param-reassign */

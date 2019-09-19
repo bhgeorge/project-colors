@@ -4,4 +4,5 @@ export default {
   order: [],
   name: 'Project Colors',
   fileName: 'project-colors',
+  id: '',
 };

@@ -43,6 +43,8 @@ export const setThemeVal = ({ commit }, obj) => {
 };
 
 export const importThemes = ({ commit }, obj) => { // eslint-disable-line
+  commit(types.RESET_STATE);
+
   const vKeys = Object.keys(obj.themeVars);
   for (let i = 0; i < vKeys.length; i += 1) {
     store.dispatch('themes/addThemeVar', obj.themeVars[vKeys[i]]);

@@ -39,8 +39,14 @@ export const setName = ({ commit }, str) => {
   commit(types.SET_KEY, { key: 'fileName', val: file });
 };
 
+export const setId = ({ commit }, str) => {
+  commit(types.SET_KEY, { key: 'id', val: str });
+};
+
 export const importColors = ({ commit }, obj) => { // eslint-disable-line
+  commit(types.RESET_STATE);
   store.dispatch('colors/setName', obj.name);
+  store.dispatch('colors/setId', obj.id);
 
   // TODO: Swap this out for a transform && plop
   for (let i = 0; i < obj.hues.length; i += 1) {
@@ -50,7 +56,9 @@ export const importColors = ({ commit }, obj) => { // eslint-disable-line
       store.dispatch('colors/addShade', { id: hue.id, shade: hue.shades[j] });
     }
   }
-  store.dispatch('core/setAlert', { title: 'Palette uploaded', type: 'success' });
+  if (!obj.suppressAlert) {
+    store.dispatch('core/setAlert', { title: 'Palette loaded', type: 'success' });
+  }
 };
 
 export default {
@@ -62,4 +70,5 @@ export default {
   updateShade,
   importColors,
   setName,
+  setId,
 };

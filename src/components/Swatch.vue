@@ -4,7 +4,6 @@
       <span class="u-visually-hidden">Color</span>
     </label>
     <div class="u-p-xs">
-      <!-- TODO: Update this to use the UUIDs -->
       <input
         :id="`${shade.id}`"
         class="u-visually-hidden"
@@ -13,7 +12,6 @@
       />
       <div class="u-flex u-flex--align-baseline u-p-bot u-color-gray-dark u-font-bold">
         <p class="u-font-bold u-m-right-s">{{ hue.name }}</p>
-        <!-- TODO: Update this to use the UUIDs -->
         <label class="u-visually-hidden" :for="`${shade.id}__hex`">Hex</label>
         <input
           :id="`${shade.id}__hex`"

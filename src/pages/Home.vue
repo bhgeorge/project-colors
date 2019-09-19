@@ -77,5 +77,10 @@ export default {
       this.$store.dispatch('colors/addHue', obj);
     },
   },
+  created() {
+    if (!this.$store.state.colors.id) {
+      this.$store.dispatch('colors/setId', this.generateRandomId());
+    }
+  },
 };
 </script>

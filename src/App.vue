@@ -76,13 +76,19 @@
 
 <script>
 import { findIndex } from 'underscore';
+import { openDB } from 'idb';
 import Icon from '@/components/Icon';
 import nav from '@/../public/json/nav.json';
+import idbUtils from '@/mixins/idbUtils';
+import { PALETTE_STORE_NAME } from '@/mixins/strConstants';
 
 export default {
   components: {
     Icon,
   },
+  mixins: [
+    idbUtils,
+  ],
   data() {
     return {
       alertTimeouts: {},
@@ -92,7 +98,7 @@ export default {
       showExport: false,
       showImport: false,
       // TODO: pull this from package.json
-      versionNumber: '0.1.0',
+      versionNumber: '1.0.0',
     };
   },
   metaInfo: {
@@ -128,6 +134,29 @@ export default {
       this.$store.dispatch('core/closeAlert', index);
       this.lastAlertSize -= 1;
     },
+    fetchMostRecentPalette() {
+      const palettes = this.getAllFromIDB(PALETTE_STORE_NAME);
+      const handleAllResults = (res) => {
+        if (res && res.length > 0) {
+          let mostRecent;
+          let mostRecentDate = 0;
+          for (let i = 0; i < res.length; i += 1) {
+            const r = res[i];
+            const dateNum = parseInt(r.lastUpdated, 10);
+            if (dateNum > mostRecentDate) {
+              mostRecent = r;
+              mostRecentDate = dateNum;
+            }
+          }
+          if (mostRecent) {
+            this.setPalette({ ...mostRecent, suppressAlert: true });
+          }
+        }
+      };
+      if (palettes) {
+        palettes.then(handleAllResults);
+      }
+    },
   },
   watch: {
     $route() {
@@ -152,6 +181,21 @@ export default {
         }, delay);
       }
     },
+  },
+  mounted() {
+    const that = this;
+    async function openIDB() {
+      const idb = await openDB('project_colors', 1, {
+        upgrade(db) {
+          db.createObjectStore('palettes', { keyPath: 'id' });
+        },
+      });
+      if (idb) {
+        that.$store.dispatch('core/setDB', idb);
+        that.fetchMostRecentPalette();
+      }
+    }
+    openIDB();
   },
 };
 </script>
