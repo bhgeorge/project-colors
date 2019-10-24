@@ -102,8 +102,8 @@ export default {
     };
   },
   metaInfo: {
-    title: 'Brian George',
-    titleTemplate: '%s | Brian George',
+    title: 'Project Colors',
+    titleTemplate: '%s | Project Colors',
   },
   computed: {
     type() {

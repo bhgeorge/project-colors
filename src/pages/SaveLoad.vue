@@ -164,6 +164,7 @@ export default {
     exportAsScss() {
       const shades = { ...this.$store.state.colors.shades };
       const shadeThemeMap = {};
+      const mapKey = 'color-';
 
       // _settings.theme.scss
       let settingsTheme = '';
@@ -171,8 +172,10 @@ export default {
       for (let i = 0; i < themeVarKeys.length; i += 1) {
         const themeVar = this.$store.state.themes.themeVars[themeVarKeys[i]];
         const shade = shades[themeVar.val].hex;
-        settingsTheme += `$${themeVar.name}: ${shade};\n`;
-        shadeThemeMap[shade] = `$${themeVar.name}`;
+        if (themeVar.substring(0, mapKey.length) === mapKey) {
+          settingsTheme += `$${themeVar.name}: ${shade};\n`;
+          shadeThemeMap[shade] = `$${themeVar.name}`;
+        }
       }
       this.createFileForDownload(
         'text/plain',
@@ -211,7 +214,7 @@ export default {
           for (let j = 0; j < hue.shades.length; j += 1) {
             const shade = shades[hue.shades[j]];
             const val = shadeThemeMap[shade.hex] || shade.hex;
-            settingsColors += `\n    '${shade.name.toLowerCase()}': ${val}`;
+            settingsColors += `\n    '${shade.name.toLowerCase()}': ${val},`;
           }
           settingsColors += '\n  ),';
         }
