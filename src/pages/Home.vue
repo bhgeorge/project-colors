@@ -2,6 +2,14 @@
   <Layout>
     <section class="o-section">
       <div class="o-container">
+        <div class="u-d-flex u-f-justify-end">
+          <button
+            class="c-btn--ui"
+            @click="resetPalette"
+          >
+            <Icon type="add" :modifiers="['o-icon--s']" /> New Palette
+          </button>
+        </div>
         <div class="h2 u-m-bot-l">
           <label class="u-visually-hidden" for="palette_name">Palette Name</label>
           <input
@@ -24,12 +32,14 @@
         </ul>
       </div>
     </section>
+    <QuickContrast />
   </Layout>
 </template>
 
 <script>
 import Layout from '@/layouts/Default';
 import Hue from '@/components/Hue';
+import QuickContrast from '@/components/QuickContrast';
 import Icon from 'vue-base/components/Icon';
 import randomId from '@/mixins/randomId';
 
@@ -39,6 +49,7 @@ export default {
     Layout,
     Hue,
     Icon,
+    QuickContrast,
   },
   mixins: [
     randomId,
@@ -75,6 +86,10 @@ export default {
         id: this.generateRandomId(),
       };
       this.$store.dispatch('colors/addHue', obj);
+    },
+    resetPalette() {
+      this.$store.dispatch('colors/resetState');
+      this.$store.dispatch('themes/resetState');
     },
   },
   created() {

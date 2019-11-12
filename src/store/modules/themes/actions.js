@@ -56,6 +56,10 @@ export const importThemes = ({ commit }, obj) => { // eslint-disable-line
   }
 };
 
+export const resetState = ({ commit }) => {
+  commit(types.RESET_STATE);
+};
+
 export default {
   addThemeVar,
   removeThemeVar,
@@ -68,4 +72,5 @@ export default {
   setThemeName,
   setThemeVal,
   importThemes,
+  resetState,
 };

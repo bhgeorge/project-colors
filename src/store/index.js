@@ -8,6 +8,7 @@ import createLogger from 'vuex/dist/logger';
 import core from './modules/core';
 import colors from './modules/colors';
 import themes from './modules/themes';
+import quickContrast from './modules/quickContrast';
 
 Vue.use(Vuex);
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     core,
     colors,
     themes,
+    quickContrast,
   },
 
   /**

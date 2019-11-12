@@ -1,0 +1,32 @@
+.c-quick-contrast {
+  bottom: $space-s;
+  position: fixed;
+  right: $space-l;
+  z-index: $z-local-top;
+  background: color('white');
+  padding: $space-s;
+
+  &__swatch-container {
+    position: relative;
+    height: $space-l;
+  }
+
+  &__swatch {
+    height: $space-m;
+    width: $space-l;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: $z-local-bot;
+    box-shadow: 0px 0px 5px 0px rgba($color-base-black, 0.4);
+
+    &.active {
+      z-index: $z-local-mid;
+    }
+
+    &:last-child {
+      top: $space-xs;
+      left: $space-xs;
+    }
+  }
+}

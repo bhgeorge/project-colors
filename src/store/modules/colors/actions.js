@@ -1,6 +1,7 @@
 /* eslint import/no-cycle: [2, { maxDepth: 1 }] */
 import store from '@/store';
 import * as types from './mutation-types';
+import randomId from '@/mixins/randomId';
 
 export const addHue = ({ commit }, obj) => {
   commit(types.ADD_HUE, obj);
@@ -61,6 +62,12 @@ export const importColors = ({ commit }, obj) => { // eslint-disable-line
   }
 };
 
+export const resetState = ({ commit }) => {
+  commit(types.RESET_STATE);
+  store.dispatch('colors/setName', 'New Palette');
+  store.dispatch('colors/setId', randomId.methods.generateRandomId());
+};
+
 export default {
   addHue,
   removeHue,
@@ -71,4 +78,5 @@ export default {
   importColors,
   setName,
   setId,
+  resetState,
 };

@@ -71,6 +71,10 @@ export default {
         return;
       }
       idb.put(storeName, item);
+      this.$store.dispatch('core/setAlert', {
+        type: 'success',
+        title: 'Palette Saved',
+      });
     },
   },
 };

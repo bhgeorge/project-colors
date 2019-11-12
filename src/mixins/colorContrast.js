@@ -21,21 +21,27 @@ export default {
       return (val <= 0.03928 ? val / 12.92 : ((val + 0.055) / 1.055) ** 2.4);
     },
     relativeLuminance(obj) {
-      const r = this.getStandardValue(obj.r / 255);
-      const g = this.getStandardValue(obj.g / 255);
-      const b = this.getStandardValue(obj.b / 255);
-      return (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
+      if (obj) {
+        const r = this.getStandardValue(obj.r / 255);
+        const g = this.getStandardValue(obj.g / 255);
+        const b = this.getStandardValue(obj.b / 255);
+        return (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
+      }
+      return null;
     },
     testContrast(color1, color2) {
       const lum1 = this.relativeLuminance(this.hexToRgb(color1));
       const lum2 = this.relativeLuminance(this.hexToRgb(color2));
 
-      const light = Math.max(lum1, lum2);
-      const dark = Math.min(lum1, lum2);
+      if (typeof lum1 === 'number' && typeof lum2 === 'number') {
+        const light = Math.max(lum1, lum2);
+        const dark = Math.min(lum1, lum2);
 
-      const ratio = (light + 0.05) / (dark + 0.05);
+        const ratio = (light + 0.05) / (dark + 0.05);
 
-      return Math.round(ratio * 100) / 100;
+        return Math.round(ratio * 100) / 100;
+      }
+      return 0;
     },
     isHigherThanThreshold(color1, color2, threshold) {
       return this.testContrast(color1, color2) >= this.contrastThresholds[threshold];

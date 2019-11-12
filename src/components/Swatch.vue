@@ -1,5 +1,14 @@
 <template lang="html">
   <div class="c-swatch">
+    <button
+      class="c-btn--ui u-bg-white u-p-0 c-swatch__quick-select-trigger"
+      type="button"
+      name="setQuickSelect"
+      @click="addToQuickSelect"
+    >
+      <Icon type="add" />
+      <span class="u-visually-hidden">Set active quick select color</span>
+    </button>
     <label :for="`${shade.id}`" class="c-swatch__color" :style="styleObj">
       <span class="u-visually-hidden">Color</span>
     </label>
@@ -36,7 +45,11 @@
           <h5 class="h5 u-b-bot u-b-gray-light u-p-bot-xs u-m-bot-s">UI (3.0)</h5>
           <ul class="o-list-bare">
             <li v-for="item in wcag.ui" :key="item.id" class="o-list-bare__item">
-              <SwatchReference :hex="item.hex" :name="item.name" />
+              <SwatchReference
+                :hex="item.hex"
+                :name="item.name"
+                :contrast="item.contrast"
+              />
             </li>
           </ul>
         </div>
@@ -44,7 +57,11 @@
           <h5 class="h5 u-b-bot u-b-gray-light u-p-bot-xs u-m-bot-s">AA Text (4.5)</h5>
           <ul class="o-list-bare">
             <li v-for="item in wcag.aa" :key="item.id" class="o-list-bare__item">
-              <SwatchReference :hex="item.hex" :name="item.name" />
+              <SwatchReference
+                :hex="item.hex"
+                :name="item.name"
+                :contrast="item.contrast"
+              />
             </li>
           </ul>
         </div>
@@ -52,7 +69,11 @@
           <h5 class="h5 u-b-bot u-b-gray-light u-p-bot-xs u-m-bot-s">AAA Text (7.0)</h5>
           <ul class="o-list-bare">
             <li v-for="item in wcag.aaa" :key="item.id" class="o-list-bare__item">
-              <SwatchReference :hex="item.hex" :name="item.name" />
+              <SwatchReference
+                :hex="item.hex"
+                :name="item.name"
+                :contrast="item.contrast"
+              />
             </li>
           </ul>
         </div>
@@ -63,6 +84,7 @@
 
 <script>
 import Modal from 'vue-base/components/Modal';
+import Icon from 'vue-base/components/Icon';
 import SwatchReference from '@/components/SwatchReference';
 import colorContrast from '@/mixins/colorContrast';
 
@@ -79,6 +101,7 @@ export default {
   },
   components: {
     Modal,
+    Icon,
     SwatchReference,
   },
   mixins: [
@@ -145,11 +168,26 @@ export default {
           const shade = shades[hue.shades[j]];
           const contrast = this.testContrast(this.shadeHex, shade.hex);
           if (contrast >= 7) {
-            this.wcag.aaa.push({ hex: shade.hex, name: `${hue.name} ${shade.name}`, id: shade.id });
+            this.wcag.aaa.push({
+              hex: shade.hex,
+              name: `${hue.name} ${shade.name}`,
+              id: shade.id,
+              contrast,
+            });
           } else if (contrast >= 4.5) {
-            this.wcag.aa.push({ hex: shade.hex, name: `${hue.name} ${shade.name}`, id: shade.id });
+            this.wcag.aa.push({
+              hex: shade.hex,
+              name: `${hue.name} ${shade.name}`,
+              id: shade.id,
+              contrast,
+            });
           } else if (contrast >= 3) {
-            this.wcag.ui.push({ hex: shade.hex, name: `${hue.name} ${shade.name}`, id: shade.id });
+            this.wcag.ui.push({
+              hex: shade.hex,
+              name: `${hue.name} ${shade.name}`,
+              id: shade.id,
+              contrast,
+            });
           }
         }
       }
@@ -163,6 +201,9 @@ export default {
         shadeId: this.reference,
         hueId: this.parent,
       });
+    },
+    addToQuickSelect() {
+      this.$store.dispatch('quickContrast/setHex', this.shadeHex);
     },
   },
 };
