@@ -1,25 +1,15 @@
-// Settings
-@import "node_modules/scss-base/settings/settings.theme";
-@import "node_modules/scss-base/settings/all";
+@import "@/../../scss-base/settings/settings.theme";
+@import "@/../../scss-base/settings/all";
 
-// Tools
-@import "node_modules/scss-base/tools/all";
+@import "@/../../scss-base/tools/all";
 
-// Generic
-@import "node_modules/scss-base/generic/all";
+@import "@/../../scss-base/generic/all";
 
-// Elements
-@import "node_modules/scss-base/elements/all";
+@import "@/../../scss-base/elements/all";
 
-// Objects
-@import "node_modules/scss-base/objects/all";
+@import "@/../../scss-base/objects/all";
 
-// Components
-@import "node_modules/scss-base/components/all";
-@import "components/all";
+@import "@/../../scss-base/components/all";
+@import "./components/all";
 
-// Utilities
-@import "node_modules/scss-base/utilities/all";
-
-// Shame
-@import "shame/utilities.flex";
+@import "@/../../scss-base/utilities/all";
